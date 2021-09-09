@@ -1,13 +1,19 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 require('dotenv').config();
 app.use(express.json());
+//setup cors
+const cors = require('cors');
+app.use(cors());
 
 //routes
 const userRoute = require('./routes/userRoutes');
 app.use('/users', userRoute);
 const postRoute = require('./routes/postRoutes');
 app.use('/posts', postRoute);
+
+app.use('/uploads', express.static(path.join(__dirname, '../', 'uploads')));
 
 //connecting to database
 const mongoose = require('mongoose');

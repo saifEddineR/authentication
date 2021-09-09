@@ -1,13 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../redux/userSlice';
 
-const LoginPage = () => {
+const LoginPage = ({ history }) => {
+  const dispatch = useDispatch();
+
   const [userInput, setUserInput] = useState({});
+  const user = useSelector((state) => state.user);
+  console.log(user);
+  useEffect(() => {
+    if (user.isAuth) {
+      history.push('/profile');
+    } else {
+      history.push('/login');
+    }
+  }, [user.isAuth]);
+
   const handleChange = (e) => {
     setUserInput({ ...userInput, [e.target.name]: e.target.value });
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(userInput);
+    dispatch(login(userInput));
   };
   return (
     <form>
@@ -21,6 +35,7 @@ const LoginPage = () => {
       <button type='submit' onClick={handleSubmit}>
         Login
       </button>
+      {user && user.errors && <p>{user.errors} </p>}
     </form>
   );
 };

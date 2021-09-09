@@ -23,8 +23,8 @@ const postSchema = new schema({
 
   // },
   image: {
-    type: String,
-    default: 'https://media2.image-republic.com/11609-large_default/cadre-noir.jpg',
+    imageURL: String,
+    public_id: String,
   },
 });
 module.exports = mongoose.model('post', postSchema);

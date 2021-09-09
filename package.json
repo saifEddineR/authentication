@@ -4,7 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "server": "nodemon server/server"
+    "server": "nodemon server/server",
+    "client": "npm start --prefix client",
+    "start": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
   "author": "",
@@ -12,11 +14,15 @@
   "dependencies": {
     "@material-ui/icons": "^4.11.2",
     "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.26.3",
+    "concurrently": "^6.2.1",
+    "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-validator": "^6.12.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.1",
-    "react-router-dom": "^5.2.1"
+    "multer": "^1.4.3",
+    "multer-storage-cloudinary": "^4.0.0"
   }
 }
