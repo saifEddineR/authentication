@@ -14,6 +14,7 @@ function App() {
         <Route path='/register' component={RegisterPage} />
         <Route path='/profile' component={Profile} />
       </Switch>
+      <p>welcome to our website</p>
     </div>
   );
 }
