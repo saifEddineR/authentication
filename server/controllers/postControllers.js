@@ -6,7 +6,7 @@ const Post = require('../models/postSchema');
 const addPost = async (req, res) => {
   try {
     const newBody = JSON.parse(req.body.info);
-    const imageInfo = await cloudinary.uploader.destroy()
+    const imageInfo = await cloudinary.uploader.upload(req.file.path);
     const newPost = await Post.create({
       title: newBody.title,
       description: newBody.description,
