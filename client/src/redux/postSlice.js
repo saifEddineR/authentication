@@ -9,7 +9,7 @@ export const addNewPost = createAsyncThunk(
     formData.append('picture', info.file);
     formData.append('info', JSON.stringify(info.postInfo));
     try {
-      const res = await axios.post('http://localhost:5000/posts/addpost', formData, {
+      const res = await axios.post('/posts/addpost', formData, {
         headers: { token: localStorage.getItem('token') },
       });
       dispatch(getPosts());
@@ -27,7 +27,7 @@ export const getPosts = createAsyncThunk(
   'posts/getPosts',
   async (info, { rejectWithValue }) => {
     try {
-      const res = await axios.get('http://localhost:5000/posts');
+      const res = await axios.get('/posts');
       return res.data;
     } catch (error) {
       return rejectWithValue(error.response.data.message);
