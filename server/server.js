@@ -22,8 +22,13 @@ app.get('*', (req, res) => {
 });
 //connecting to database
 const mongoose = require('mongoose');
-mongoose.connect(process.env.MONGO_URI, (err) =>
-  err ? console.log(err) : console.log('database connected')
+mongoose.connect(
+  process.env.MONGO_URI,
+  {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+  },
+  (err) => (err ? console.log(err) : console.log('database connected'))
 );
 //creating server
 app.listen(process.env.PORT, (err) =>
