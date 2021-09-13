@@ -1,11 +1,12 @@
 const cloudinary = require('../helpers/cloudinary');
 const Post = require('../models/postSchema');
-
+/**
+ *@param<string>
+ */
 const addPost = async (req, res) => {
   try {
     const newBody = JSON.parse(req.body.info);
-    const imageInfo = await cloudinary.uploader.upload(req.file.path);
-    console.log(imageInfo);
+    const imageInfo = await cloudinary.uploader.destroy()
     const newPost = await Post.create({
       title: newBody.title,
       description: newBody.description,

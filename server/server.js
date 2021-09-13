@@ -15,6 +15,11 @@ app.use('/posts', postRoute);
 
 app.use('/uploads', express.static(path.join(__dirname, '../', 'uploads')));
 
+//setup for deployment :
+app.use(express.static(path.join(__dirname, '../', 'client', 'build')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../', 'client', 'build', 'index.html'));
+});
 //connecting to database
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_URI, (err) =>
