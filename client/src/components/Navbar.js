@@ -9,9 +9,12 @@ const Navbar = () => {
     <div>
       <Link to='/'>Home</Link>
       {user.isAuth ? (
-        <Link to='/login' onClick={() => dispatch(logout())}>
-          logout
-        </Link>
+        <>
+          <Link to='/login' onClick={() => dispatch(logout())}>
+            logout
+          </Link>
+          <h5>{user.userInfo.fullName}</h5>
+        </>
       ) : (
         <>
           <Link to='/login'>Login</Link>

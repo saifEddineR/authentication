@@ -23,6 +23,54 @@ export const addNewPost = createAsyncThunk(
     }
   }
 );
+export const updatePost = createAsyncThunk(
+  'posts/updatePost',
+  async (info, { rejectWithValue, dispatch }) => {
+    try {
+      const res = await axios.put(`/posts/update/${info.id}`, info.data, {
+        headers: { token: localStorage.getItem('token') },
+      });
+      dispatch(getPosts());
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+export const updatePostImage = createAsyncThunk(
+  'posts/updatePostImage',
+  async (info, { rejectWithValue, dispatch }) => {
+    try {
+      const formData = new FormData();
+      formData.append('postImg', info.file);
+      const res = await axios.put(`/posts/uploadimg/${info.id}`, formData, {
+        headers: { token: localStorage.getItem('token') },
+      });
+      dispatch(getPosts());
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+export const updatePostLike = createAsyncThunk(
+  'posts/updatePostLike',
+  async (postId, { rejectWithValue, dispatch }) => {
+    try {
+      const res = await axios.put(
+        `/posts/likes/${postId}`,
+        {},
+        {
+          headers: { token: localStorage.getItem('token') },
+        }
+      );
+      dispatch(getPosts());
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
 export const getPosts = createAsyncThunk(
   'posts/getPosts',
   async (info, { rejectWithValue }) => {

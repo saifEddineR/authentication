@@ -1,5 +1,11 @@
 const express = require('express');
-const { addPost, getPosts } = require('../controllers/postControllers');
+const {
+  addPost,
+  getPosts,
+  updatePost,
+  updatePostImage,
+  postLikes,
+} = require('../controllers/postControllers');
 const authMiddleware = require('../middleware/authMiddleware');
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const multer = require('multer');
@@ -15,7 +21,10 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage });
 
+router.put('/likes/:id', authMiddleware, postLikes);
 router.post('/addpost', upload.single('picture'), authMiddleware, addPost);
 router.get('/', getPosts);
+router.put('/update/:id', authMiddleware, updatePost);
+router.put('/uploadimg/:id', upload.single('postImg'), authMiddleware, updatePostImage);
 
 module.exports = router;

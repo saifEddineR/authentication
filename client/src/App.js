@@ -15,7 +15,7 @@ function App() {
         <Route path='/profile' component={Profile} />
       </Switch>
       <p>welcome to our website</p>
-      <h1>GOMYCODE </h1>
+      <h1>GOMYCODE</h1>
     </div>
   );
 }

@@ -14,5 +14,6 @@ const userSchema = new schema({
     type: String,
     required: true,
   },
+  isblocked: {}
 });
 module.exports = mongoose.model('person', userSchema);

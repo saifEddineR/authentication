@@ -19,12 +19,17 @@ const postSchema = new schema({
     ref: 'person',
     required: true,
   },
-  // likes:{
-
-  // },
+  likes: {
+    type: [mongoose.Types.ObjectId],
+    default: [],
+  },
   image: {
-    imageURL: String,
-    public_id: String,
+    imageURL: {
+      type: String,
+    },
+    public_id: {
+      type: String,
+    },
   },
 });
 module.exports = mongoose.model('post', postSchema);
