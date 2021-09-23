@@ -64,7 +64,24 @@ export const updatePostLike = createAsyncThunk(
           headers: { token: localStorage.getItem('token') },
         }
       );
-      dispatch(getPosts());
+      dispatch(getSinglePost(postId));
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+export const updatePostComment = createAsyncThunk(
+  'posts/updatePostComment',
+  async (info, { rejectWithValue, dispatch }) => {
+    try {
+      const res = await axios.put(
+        `/posts/comment/${info.postId}`,
+        { desc: info.desc },
+        {
+          headers: { token: localStorage.getItem('token') },
+        }
+      );
       return res.data;
     } catch (error) {
       return rejectWithValue(error.response.data.message);
@@ -76,6 +93,17 @@ export const getPosts = createAsyncThunk(
   async (info, { rejectWithValue }) => {
     try {
       const res = await axios.get('/posts');
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+export const getSinglePost = createAsyncThunk(
+  'posts/getSinglePost',
+  async (id, { rejectWithValue }) => {
+    try {
+      const res = await axios.get(`/posts/getpost/${id}`);
       return res.data;
     } catch (error) {
       return rejectWithValue(error.response.data.message);
@@ -98,7 +126,6 @@ const postSlice = createSlice({
     },
     [addNewPost.fulfilled]: (state, action) => {
       state.loading = false;
-      state.post = action.payload;
       state.postErrors = null;
     },
     [addNewPost.rejected]: (state, action) => {
@@ -116,6 +143,21 @@ const postSlice = createSlice({
     [getPosts.rejected]: (state, action) => {
       state.loading = false;
       state.errors = action.payload;
+    },
+    [getSinglePost.pending]: (state) => {
+      state.loading = true;
+    },
+    [getSinglePost.fulfilled]: (state, action) => {
+      state.post = action.payload;
+      state.loading = false;
+      state.postsErrors = null;
+    },
+    [getSinglePost.rejected]: (state, action) => {
+      state.loading = false;
+      state.errors = action.payload;
+    },
+    [updatePostComment.fulfilled]: (state, action) => {
+      state.post = action.payload;
     },
   },
 });

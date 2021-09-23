@@ -28,6 +28,17 @@ const getPosts = async (req, res) => {
   }
 };
 
+const getSinglePost = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id)
+      .populate('owner', '-password -__v')
+      .populate('comments.commentOwner', '-password -__v');
+    res.json(post);
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+};
+
 const updatePost = async (req, res) => {
   try {
     const { description, title } = req.body;
@@ -60,18 +71,15 @@ const postLikes = async (req, res) => {
     const postId = req.params.id;
     const existPost = await Post.findById(postId);
     const existLike = await existPost.likes.find((like) => like == req.personId);
-    console.log(existLike);
     if (existLike) {
       const updatedPost = await Post.findByIdAndUpdate(postId, {
         $pull: { likes: req.personId },
       });
-      console.log('pull');
       res.json(updatedPost);
     } else {
       const updatedPost = await Post.findByIdAndUpdate(postId, {
         $push: { likes: req.personId },
       });
-      console.log('push');
       res.json(updatedPost);
     }
   } catch (error) {
@@ -79,4 +87,30 @@ const postLikes = async (req, res) => {
   }
 };
 
-module.exports = { addPost, getPosts, updatePost, updatePostImage, postLikes };
+const addComment = async (req, res) => {
+  try {
+    const { desc } = req.body;
+    const newPost = await Post.findByIdAndUpdate(
+      req.params.id,
+      {
+        $push: { comments: { commentOwner: req.personId, desc } },
+      },
+      { new: true }
+    )
+      .populate('owner')
+      .populate('comments.commentOwner', '-password -__v');
+    res.json(newPost);
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+};
+
+module.exports = {
+  addPost,
+  getPosts,
+  getSinglePost,
+  updatePost,
+  updatePostImage,
+  postLikes,
+  addComment,
+};

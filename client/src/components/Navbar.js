@@ -13,6 +13,7 @@ const Navbar = () => {
           <Link to='/login' onClick={() => dispatch(logout())}>
             logout
           </Link>
+          <Link to='/profile'>profile</Link>
           <h5>{user.userInfo.fullName}</h5>
         </>
       ) : (

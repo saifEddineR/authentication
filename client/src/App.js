@@ -4,18 +4,18 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import Navbar from './components/Navbar';
 import Profile from './components/Profile';
+import PostDetails from './pages/PostDetails';
 
 function App() {
   return (
     <div className='App'>
       <Navbar />
       <Switch>
-        <Route path='/login' component={LoginPage} />
-        <Route path='/register' component={RegisterPage} />
-        <Route path='/profile' component={Profile} />
+        <Route exact path='/login' component={LoginPage} />
+        <Route exact path='/register' component={RegisterPage} />
+        <Route exact path='/profile' component={Profile} />
+        <Route exact path='/post/:id' component={PostDetails} />
       </Switch>
-      <p>welcome to our website</p>
-      <h1>GOMYCODE</h1>
     </div>
   );
 }

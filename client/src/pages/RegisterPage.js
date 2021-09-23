@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { postNewUser } from '../redux/userSlice';
+import { clearErrors, postNewUser } from '../redux/userSlice';
 
 const RegisterPage = ({ history }) => {
   const dispatch = useDispatch();
   const [userInput, setUserInput] = useState({});
   const user = useSelector((state) => state.user);
   useEffect(() => {
+    dispatch(clearErrors());
     if (user.isAuth) {
       history.push('/profile');
     } else {
@@ -38,7 +39,7 @@ const RegisterPage = ({ history }) => {
       <button type='submit' onClick={handleSubmit}>
         Login
       </button>
-      {user && user.errors && <p>{user.errors} </p>}
+      {user && user.registerErrors && <p>{user.registerErrors} </p>}
     </form>
   );
 };

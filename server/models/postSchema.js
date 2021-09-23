@@ -31,5 +31,15 @@ const postSchema = new schema({
       type: String,
     },
   },
+  comments: [
+    {
+      commentOwner: { type: mongoose.Types.ObjectId, ref: 'person' },
+      desc: String,
+      createdAt: {
+        type: Date,
+        default: new Date(),
+      },
+    },
+  ],
 });
 module.exports = mongoose.model('post', postSchema);

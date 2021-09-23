@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../redux/userSlice';
+import { clearErrors, login } from '../redux/userSlice';
 
 const LoginPage = ({ history }) => {
   const dispatch = useDispatch();
@@ -9,6 +9,7 @@ const LoginPage = ({ history }) => {
   const user = useSelector((state) => state.user);
   console.log(user);
   useEffect(() => {
+    dispatch(clearErrors());
     if (user.isAuth) {
       history.push('/profile');
     } else {
@@ -35,7 +36,7 @@ const LoginPage = ({ history }) => {
       <button type='submit' onClick={handleSubmit}>
         Login
       </button>
-      {user && user.errors && <p>{user.errors} </p>}
+      {user && user.loginErrors && <p>{user.loginErrors} </p>}
     </form>
   );
 };

@@ -7,6 +7,7 @@ import {
   updatePostImage,
   updatePostLike,
 } from '../redux/postSlice';
+import { Link } from 'react-router-dom';
 
 const Profile = ({ history }) => {
   const dispatch = useDispatch();
@@ -75,7 +76,10 @@ const Profile = ({ history }) => {
             <>
               <h4>{post.owner.fullName}</h4>
               <h2>{post.title} </h2>
-              <img src={post.image.imageURL} alt='workshop' width='200' />
+              <Link to={`/post/${post._id}`}>
+                {' '}
+                <img src={post.image.imageURL} alt='workshop' width='200' />
+              </Link>
               <p>{post.description}</p>
               <button
                 style={

@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 const authMiddleware = async (req, res, next) => {
   try {
     const token = req.header('token');
-    console.log(req.header('token'));
     const verifyToken = jwt.verify(token, process.env.SECRET_KEY);
     if (!verifyToken) res.status(401).json({ message: 'you are not authorized' });
     req.personId = verifyToken.id;
